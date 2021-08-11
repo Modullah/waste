@@ -22,7 +22,7 @@ class _CameraState extends State<Camera> {
 
   @override
   Widget build(BuildContext context) {
-    ImageNotifier imageNotifier = Provider.of<ImageNotifier>(context);
+    //ImageNotifier imageNotifier = Provider.of<ImageNotifier>(context);
     return Scaffold(
       appBar: AppBar(title: Text('New Post')),
       body: Center(
