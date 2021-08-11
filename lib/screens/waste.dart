@@ -1,5 +1,3 @@
-
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -52,9 +50,8 @@ class _WasteState extends State<Waste> {
             itemBuilder: (context, index) {
               DocumentSnapshot post = snapshot.data.docs[index];
               return ListTile(
-                leading: Text(post['quantity'].toString(),
-                
-                ),
+                leading: Text(post['quantity'].toString()),
+                title: Text('Placeholder'),
               );
             }
           
