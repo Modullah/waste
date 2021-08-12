@@ -1,33 +1,37 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:waste/screens/gallery.dart';
 import 'dart:io';
-import 'package:waste/screens/camera.dart';
-
 
 class Waste extends StatefulWidget {
-  const Waste({ Key? key }) : super(key: key);
-
+  const Waste({ Key? key,}) : super(key: key);
+  //final Function (String imageUrl) onFileChanged;  required this.onFileChanged 
   @override
   _WasteState createState() => _WasteState();
 }
 
 class _WasteState extends State<Waste> {
   var loading = true;
-  File? image;
-  final picker = ImagePicker();
+  File? image; //File
+  var url;
 
-  void pickImage(ImageSource source) async {
-    try{
-    final pickedFile = await picker.pickImage(source: source);
-    final imageTemp = File(pickedFile!.path);
-    setState(() => this.image = imageTemp);
-    } on PlatformException catch (e) {
-      print('Failed to pick image: $e');
-    }
+  Future pickImage(ImageSource source) async {
+
+    final image = await ImagePicker().pickImage(source: source);
+    final imagePath = File(image!.path);
+    Reference reference = FirebaseStorage.instance.ref().child(image.toString());
+    UploadTask uploadTask = reference.putFile(imagePath);
+    
+    uploadTask.whenComplete(() async {
+      url = await reference.getDownloadURL();
+      print(url);
+    }).catchError((onError) {
+      print(onError);
+    });
+    
+    print(url);
   }
   
   CollectionReference ref = FirebaseFirestore.instance.collection('post');
@@ -72,8 +76,13 @@ class _WasteState extends State<Waste> {
   Widget camera(){
     return FloatingActionButton(
       child: Icon(Icons.camera_alt),
-      onPressed: () => pickImage(ImageSource.gallery),
+      onPressed: () => pickImgGallery(),
     );
+  }
+
+  pickImgGallery(){
+    pickImage(ImageSource.gallery);
+    Navigator.push(context, MaterialPageRoute(builder: (context) => Gallery()));
   }
   //onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => Camera()))
 }
