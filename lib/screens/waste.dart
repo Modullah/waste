@@ -1,9 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:waste/screens/gallery.dart';
-import 'dart:io';
 
 class Waste extends StatefulWidget {
   const Waste({ Key? key,}) : super(key: key);
@@ -57,7 +54,7 @@ class _WasteState extends State<Waste> {
   Widget camera(){
     return FloatingActionButton(
       child: Icon(Icons.camera_alt),
-      onPressed: () => {},
+      onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => Gallery())),
     );
   }
 

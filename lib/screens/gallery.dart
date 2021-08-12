@@ -1,17 +1,11 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:waste/controller/image_notifier.dart';
-import 'package:provider/provider.dart';
-import 'waste.dart';
 import 'dart:io';
-
-import 'package:location/location.dart';
 
 class Gallery extends StatefulWidget {
 
-  const Gallery({ Key? key}) : super(key: key);
-
+  const Gallery({ Key? key, }) : super(key: key);
+ 
 
   @override
   _GalleryState createState() => _GalleryState();
@@ -19,8 +13,47 @@ class Gallery extends StatefulWidget {
 
 class _GalleryState extends State<Gallery> {
   
-  String imageUrl = '';
+  String url = '';
 
+  var tmp = true;
+  var _image;
+  var imagePicker;
+
+  void pickImage() async {
+    //image = (await ImagePicker().pickImage(source: ImageSource.gallery)) as Future;
+    // try{
+      print('hi, before pick image');
+      XFile image = await imagePicker.pickImage(source: ImageSource.camera);
+      print('after pick image');
+
+      //if (image == null) return;
+      //final path = image.path;
+
+    // } catch (err) {
+    //   print('Caught error: $err');
+    // }
+   
+    // Reference reference = FirebaseStorage.instance.ref().child("placeholder.jpg");
+    // UploadTask uploadTask = reference.putFile(imagePath);
+
+    // uploadTask.whenComplete(() async {
+    //   url = await reference.getDownloadURL();
+    //   print(url);
+    // }).catchError((onError) {
+    //   print(onError);
+    // });
+
+    //print(url);
+    setState(() {
+      _image = File(image.path);
+    });
+  }
+
+  @override void initState() {
+    super.initState();
+    imagePicker = ImagePicker();
+  }
+  
   @override
   Widget build(BuildContext context) {
     //ImageNotifier imageNotifier = Provider.of<ImageNotifier>(context);
@@ -32,23 +65,13 @@ class _GalleryState extends State<Gallery> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const SizedBox(height: 20),
-            imageUrl == null ? CircularProgressIndicator(color: Colors.amberAccent) : Row()
-            // Waste(
-            //   onFileChanged: (imageUrl){
-            //     setState(() {
-            //       this.imageUrl = imageUrl;
-            //     });
-            //   }
-            // )
-            //imageUrl != null ? Image.file(imageUrl) : CircularProgressIndicator(color: Colors.amberAccent);
-
-          ],
+            ElevatedButton(onPressed: () => pickImage(), child: Text('Button')),
+            if (_image != null) Image.file(_image, width: 160, height: 160, fit: BoxFit.cover) 
+            //img != null ? FlutterLogo(size: 160) : Image.file(img!, width: 160, height: 160, fit: BoxFit.cover,),
+         ],
         ),
       ),
     );
   }
-
-
-
 
 }

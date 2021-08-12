@@ -1,7 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:waste/controller/image_notifier.dart';
 import 'app.dart';
 
 void main() async {
@@ -9,6 +7,3 @@ void main() async {
   await Firebase.initializeApp();
   runApp(App());  
 }
-// MultiProvider(providers: [
-//     ChangeNotifierProvider(create: (_)=> ImageNotifier()),],
-//     child: 
