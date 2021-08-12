@@ -13,42 +13,16 @@ class Waste extends StatefulWidget {
 }
 
 class _WasteState extends State<Waste> {
-  var loading = true;
-  File? file; //File
-  String url ='';
-
-  // pickImage() async {
-  //   final image = await ImagePicker().pickImage(source: ImageSource.gallery);
-  //   image != null ? file = File(image.path) : print(image.toString());
-  //   //final pickedImage = File(img?.path ?? '');
-  //   // final Reference storageReference = FirebaseStorage.instance.ref().child('placeholder.jpg');
-  //   // UploadTask uploadTask = storageReference.child('placeholder.jpg').putFile(pickedImage);
-  //   // url = await (await uploadTask).ref.getDownloadURL();
-  //   await uploadImage(file);
-
-  //   print(url);
-  //   setState(() {
-  //     //file = pickedImage;
-  //   });
-  //   Navigator.push(context, MaterialPageRoute(builder: (context) => Gallery()));
-  // }
-
-  // uploadImage(file) async {
-  //   Reference reference = FirebaseStorage.instance.ref().child('path').child('/.jpg');
-  //   UploadTask task = reference.putFile(file);
-  //   TaskSnapshot snapshot = await task;
-  //   url = await snapshot.ref.getDownloadURL();
-  // }
-
+ 
   
   CollectionReference ref = FirebaseFirestore.instance.collection('post');
 
   @override
   Widget build(BuildContext context) {
-    return loading == false ? crclProgInd(): waste();
+    return waste(); //loading == false ? crclProgInd(): waste();
   }
 
-  waste(){
+  Widget waste(){
     return Scaffold(
       appBar: AppBar(title: Text('Waste')),
       floatingActionButton: camera(),
