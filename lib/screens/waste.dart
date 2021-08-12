@@ -15,7 +15,7 @@ class Waste extends StatefulWidget {
 class _WasteState extends State<Waste> {
  
   
-  CollectionReference ref = FirebaseFirestore.instance.collection('post');
+  //CollectionReference ref = FirebaseFirestore.instance.collection('post');
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class _WasteState extends State<Waste> {
       floatingActionButton: camera(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: StreamBuilder(
-        stream: ref.snapshots(),
+        stream: FirebaseFirestore.instance.collection('post').snapshots(),
         builder: (context, AsyncSnapshot snapshot) {
           return !snapshot.hasData ? const Text('Loading...') : ListView.builder(
             itemCount: snapshot.data.docs.length,
