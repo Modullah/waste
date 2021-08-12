@@ -14,25 +14,32 @@ class Waste extends StatefulWidget {
 
 class _WasteState extends State<Waste> {
   var loading = true;
-  File? image; //File
-  var url;
+  File? file; //File
+  String url ='';
 
-  Future pickImage(ImageSource source) async {
+  // pickImage() async {
+  //   final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+  //   image != null ? file = File(image.path) : print(image.toString());
+  //   //final pickedImage = File(img?.path ?? '');
+  //   // final Reference storageReference = FirebaseStorage.instance.ref().child('placeholder.jpg');
+  //   // UploadTask uploadTask = storageReference.child('placeholder.jpg').putFile(pickedImage);
+  //   // url = await (await uploadTask).ref.getDownloadURL();
+  //   await uploadImage(file);
 
-    final image = await ImagePicker().pickImage(source: source);
-    final imagePath = File(image!.path);
-    Reference reference = FirebaseStorage.instance.ref().child(image.toString());
-    UploadTask uploadTask = reference.putFile(imagePath);
-    
-    uploadTask.whenComplete(() async {
-      url = await reference.getDownloadURL();
-      print(url);
-    }).catchError((onError) {
-      print(onError);
-    });
-    
-    print(url);
-  }
+  //   print(url);
+  //   setState(() {
+  //     //file = pickedImage;
+  //   });
+  //   Navigator.push(context, MaterialPageRoute(builder: (context) => Gallery()));
+  // }
+
+  // uploadImage(file) async {
+  //   Reference reference = FirebaseStorage.instance.ref().child('path').child('/.jpg');
+  //   UploadTask task = reference.putFile(file);
+  //   TaskSnapshot snapshot = await task;
+  //   url = await snapshot.ref.getDownloadURL();
+  // }
+
   
   CollectionReference ref = FirebaseFirestore.instance.collection('post');
 
@@ -76,13 +83,18 @@ class _WasteState extends State<Waste> {
   Widget camera(){
     return FloatingActionButton(
       child: Icon(Icons.camera_alt),
-      onPressed: () => pickImgGallery(),
+      onPressed: () => {},
     );
   }
 
-  pickImgGallery(){
-    pickImage(ImageSource.gallery);
-    Navigator.push(context, MaterialPageRoute(builder: (context) => Gallery()));
-  }
+  // void newPost() {
+  //   Navigator.push(context, MaterialPageRoute(builder: (context) => Gallery()));
+  // }
+
+  // pickImgGallery() {
+  //   pickImage();
+  //   //uploadImage();
+  //   Navigator.push(context, MaterialPageRoute(builder: (context) => Gallery()));
+  // }
   //onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => Camera()))
 }
